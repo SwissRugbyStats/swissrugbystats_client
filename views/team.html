@@ -1,5 +1,14 @@
-<div class="jumbotron">
-  <h1 class="page-header" data-ng-repeat="t in teams | filter:{id : teamId}">{{t.name}}</h1>
+<div>
+    <ol class="breadcrumb">
+        <li><a href="#/">Home</a></li>
+        <li><a href="#/Teams">Teams</a></li>
+        <li><a href="#/Team/">Team</a></li>
+    </ol>
+
+</div>
+
+<div class="jumbotron" data-ng-repeat="t in teams | filter:exactMatch">
+  <h1 class="page-header">{{t.name}}</h1>
   <img src="{{t.logo}}">
     <p>Blabla Team Geschichte Blabla, Liga, Platz, Club</p>
 </div>
