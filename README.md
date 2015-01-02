@@ -1,0 +1,2 @@
+swissrugbystats_client
+======================
