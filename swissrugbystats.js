@@ -19,6 +19,11 @@ srsApp.config(function ($routeProvider){
 			controller : 'VenueController',
 			templateUrl : 'views/venues.html'
 		})
+		.when('/venues/:venueId',
+		{
+			controller : 'VenueController',
+			templateUrl : 'views/venue.html'
+		})
 		.when('/games',
 		{
 			controller : 'SwissRugbyStatsController',
@@ -113,10 +118,18 @@ function LeagueController($scope, $routeParams, $filter, $http) {
 function VenueController($scope, $routeParams, $filter, $http) {
 	
 	$scope.venues = {};
-	$http.get(apiurl+'/venues/.json').
-        success(function(data) {
-            $scope.venues = data;
-    });
+	if (Object.keys($routeParams).length != 0) {
+		$scope.venueId = $routeParams.venueId;
+		$http.get(apiurl+'/venues/'+$scope.venueId+'/.json');
+			success(function(data) {
+	            $scope.venue = data;
+	    });
+	} else {
+		$http.get(apiurl+'/venues/.json').
+	        success(function(data) {
+	            $scope.venues = data;
+	    });
+	}
 }
 
 function GameController($scope, $routeParams, $filter, $http) {
