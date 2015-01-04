@@ -7,7 +7,7 @@ srsApp.config(function ($routeProvider){
 	$routeProvider
 		.when('/',
 		{
-			redirectTo: '/leagues'
+			templateUrl : 'views/index.html'
 		})
 		.when('/leagues',
 		{
@@ -120,7 +120,7 @@ function VenueController($scope, $routeParams, $filter, $http) {
 	$scope.venues = {};
 	if (Object.keys($routeParams).length != 0) {
 		$scope.venueId = $routeParams.venueId;
-		$http.get(apiurl+'/venues/'+$scope.venueId+'/.json');
+		$http.get(apiurl+'/venues/'+$scope.venueId+'/.json').
 			success(function(data) {
 	            $scope.venue = data;
 	    });
