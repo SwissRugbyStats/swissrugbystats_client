@@ -1,15 +1,15 @@
 <div>
     <ol class="breadcrumb">
         <li><a href="#/">Home</a></li>
-        <li><a href="#/Teams">Teams</a></li>
-        <li><a href="#/Team/">Team</a></li>
+        <li><a href="#/teams">Teams</a></li>
+        <li><a href="#/teams/{{team.id}}">{{team.name}}</a></li>
     </ol>
 
 </div>
 
-<div class="jumbotron" data-ng-repeat="t in teams | filter:exactMatch">
-  <h1 class="page-header">{{t.name}}</h1>
-  <img src="{{t.logo}}">
+<div class="jumbotron">
+  <h1 class="page-header">{{team.name}}</h1>
+  <img src="{{team.logo}}">
     <p>Blabla Team Geschichte Blabla, Liga, Platz, Club</p>
 </div>
 
@@ -17,7 +17,7 @@
   <h3>Alle Spiele</h3>
   <ul>
     <li data-ng-repeat="g in games | filter:gameParticipantFilter">
-      {{ g.date | date:'dd.MM.yyyy' }} - <a href="{{ g.fsrUrl }}">{{ g.host.team.name }} vs {{ g.guest.team.name }}</a> <span ng-show="g.host.score">- ({{ g.host.score}} : {{ g.guest.score }})</span></li>
+      {{ g.date | date:'dd.MM.yyyy' }} - <a href="#/games/{{ g.id }}">{{ g.host.team.name }} vs {{ g.guest.team.name }}</a> <span ng-show="g.host.score">- ({{ g.host.score}} : {{ g.guest.score }})</span></li>
   </ul>
 
   <h3 class="sub-header">Nächstes Spiel</h3>

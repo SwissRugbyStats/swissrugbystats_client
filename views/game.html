@@ -1,0 +1,31 @@
+<div>
+    <ol class="breadcrumb">
+        <li><a href="#/">Home</a></li>
+        <li><a href="#/games">Games</a></li>
+        <li><a href="#/games/{{game.id}}">{{game.host.team.name}} vs {{game.guest.team.name}}</a></li>
+    </ol>
+
+</div>
+
+<div class="jumbotron">
+  <h1 class="page-header">{{game.host.team.name}} vs {{game.guest.team.name}}<span id="result" data-ng-if="game.host.score && game.guest.score"> ({{game.host.score}}:{{game.guest.score}})</span></h1>
+    <p>
+      <span data-ng-if="game.date">Kickoff: {{game.date | date:"dd.MM.yyyy',' HH:mm"}}<br /></span>
+      <span data-ng-if="game.venue.name">Venue: {{game.venue.name}}<br /></span>
+      <span data-ng-if="game.referee.name">Referee: {{game.referee.name}}<br /></span>
+      <a href="{{game.fsrUrl}}" target="_blank">View game on suisserugby.com</a>
+    </p>
+</div>
+
+<h2 class="sub-header">Other encounters</h2> 
+  <ul>
+    <li data-ng-repeat="g in games | filter:gameParticipantFilter">
+      {{ g.date | date:'dd.MM.yyyy' }} - <a href="#/games/{{ g.id }}">{{ g.host.team.name }} vs {{ g.guest.team.name }}</a> <span ng-show="g.host.score">- ({{ g.host.score}} : {{ g.guest.score }})</span></li>
+  </ul>
+
+
+{{game}}
+<br/>
+{{team1}}
+<br/>
+{{team2}}
