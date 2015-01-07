@@ -49,8 +49,9 @@
             <li><a href="#/venues">Venues</a></li>
             <li><a href="#/referees">Referees</a></li>
             <li><a href="#/games">Games</a></li>
-            <li><a href="" data-toggle="modal" data-target="#myModal">About</a></li>
-            <li><a target="_blank" href="http://api.swissrugbystats.ch" title="Swiss Rugby Stats API">API</a></li>
+            <!--<li><a href="" data-toggle="modal" data-target="#myModal">About</a></li>-->
+            <li><a href="#/about">About</a></li>
+            <li><a href="#/about?scrollTo=api" title="Swiss Rugby Stats API">API</a></li>
           </ul>
           <form class="navbar-form navbar-left">
             <input type="text" class="form-control" placeholder="Search...">
@@ -62,18 +63,12 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Spiele</a></li>
-            <li><a href="#">Statistik</a></li>
-            <li><a href="#">Spieler</a>
-            </li>
+
+          <!-- Sidebar Placeholder -->
+          <ul class="nav nav-sidebar" ng-include="sidebar">
+
           </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="">Club Website</a></li>
-            <li><a href="">Club Facebook</a></li>
-            <li><a href="">Club Twitter</a></li>
-          </ul>
+
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" data-ng-view="" autoscroll="true">
 

@@ -49,6 +49,10 @@ srsApp.config(function ($routeProvider){
 			controller : 'RefereeController',
 			templateUrl : 'views/referees.html'
 		})
+		.when('/about',
+		{
+			templateUrl : 'views/about.html'
+		})
 		.otherwise({ redirectTo: '/' });
 });
 
@@ -56,14 +60,16 @@ srsApp.config(function ($routeProvider){
 function SwissRugbyStatsController($scope, $routeParams, $filter, $http) {
 	
 	$scope.teams = {};
+	$scope.sidebar = {};
 	if (Object.keys($routeParams).length != 0) {
-		console.log($routeParams);
 		$scope.params = $routeParams;
 		$scope.teamId = $routeParams.teamId;
 		$http.get(apiurl +'/teams/'+$scope.teamId+'/.json').
     	success(function(data) {
 	        $scope.team = data;
     	});
+    	$scope.sidebar = "test";
+    	console.log($scope.sidebar);
 	} else {
 		$http.get(apiurl +'/teams/.json').
     	success(function(data) {
@@ -99,6 +105,7 @@ function SwissRugbyStatsController($scope, $routeParams, $filter, $http) {
 
 function RefereeController($scope, $routeParams, $filter, $http) {
 	
+	$scope.sidebar = {};
 	$scope.referees = {};
 	$http.get(apiurl+'/referees/.json').
         success(function(data) {
@@ -108,6 +115,7 @@ function RefereeController($scope, $routeParams, $filter, $http) {
 
 function LeagueController($scope, $routeParams, $filter, $http) {
 	
+	$scope.sidebar = {};
 	$scope.leagues = {};
 	$http.get(apiurl+'/leagues/.json').
         success(function(data) {
@@ -117,6 +125,7 @@ function LeagueController($scope, $routeParams, $filter, $http) {
 
 function VenueController($scope, $routeParams, $filter, $http) {
 	
+	$scope.sidebar = {};
 	$scope.venues = {};
 	if (Object.keys($routeParams).length != 0) {
 		$scope.venueId = $routeParams.venueId;
@@ -134,6 +143,7 @@ function VenueController($scope, $routeParams, $filter, $http) {
 
 function GameController($scope, $routeParams, $filter, $http) {
 	
+	$scope.sidebar = {};
 	$scope.gameId = $routeParams.gameId;
 
 	$scope.game = {};
@@ -150,7 +160,6 @@ function GameController($scope, $routeParams, $filter, $http) {
         success(function(data) {
             $scope.games = data;
     });
-    
 
     // custom filters
 	$scope.gameParticipantFilter = function (game) {
@@ -173,3 +182,11 @@ srsApp.controller('RefereeController', RefereeController);
 srsApp.controller('LeagueController', LeagueController);
 srsApp.controller('VenueController', VenueController);
 srsApp.controller('GameController', GameController);
+
+srsApp.run(function($rootScope, $location, $anchorScroll, $routeParams) {
+  //when the route is changed scroll to the proper element.
+  $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
+    $location.hash($routeParams.scrollTo);
+    $anchorScroll();  
+  });
+});

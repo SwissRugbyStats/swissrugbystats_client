@@ -1,3 +1,9 @@
+<!-- here is an additional section of the view -->
+<script type="text/ng-template" id="venues_sb.html" ng-init="$parent.sidebar='venues_sb.html'">
+    <!--<li><a href="#/about?scrollTo=about">About</a>-->
+</script>
+
+<!-- content -->
 <div>
     <ol class="breadcrumb">
         <li><a href="#/">Home</a></li>
@@ -14,5 +20,3 @@
     <li data-ng-repeat="v in venues">
       <a href="#/venues/{{v.id}}">{{v.name}}</a></li>
   </ul>
-
- 

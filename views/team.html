@@ -1,3 +1,17 @@
+<!-- here is an additional section of the view -->
+<script type="text/ng-template" id="team_sb.html" ng-init="$parent.sidebar='team_sb.html'">
+    <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
+    <li><a href="#">Spiele</a></li>
+    <li><a href="#">Statistik</a></li>
+    <li><a href="#">Spieler</a>
+
+    <li><a href="">Club Website</a></li>
+    <li><a href="">Club Facebook</a></li>
+    <li><a href="">Club Twitter</a></li>
+</script>
+
+
+
 <div>
     <ol class="breadcrumb">
         <li><a href="#/">Home</a></li>
@@ -10,7 +24,9 @@
 <div class="jumbotron">
   <h1 class="page-header">{{team.name}}</h1>
   <img src="{{team.logo}}">
-    <p>Blabla Team Geschichte Blabla, Liga, Platz, Club</p>
+    <p>Played games: {{team.gameCount}}<br/>
+      Won games: {{team.winCount}}<br/>
+      Lost games: {{team.lossCount}}</p>
 </div>
 
  <h2 class="sub-header">Spiele</h2>
@@ -21,9 +37,9 @@
   </ul>
 
   <h3 class="sub-header">Nächstes Spiel</h3>
-  <p>Nächstes Spiel blabla</p>
+  <p>{{ team.nextGame.date | date:'dd.MM.yyyy' }} - <a href="#/games/{{ g.id }}">{{ team.nextGame.host.team.name }} vs {{ team.nextGame.guest.team.name }}</a> <span ng-show="g.host.score">- ({{ team.nextGame.host.score}} : {{ team.nextGame.guest.score }})</span></p>
   <h3 class="sub-header">Letztes Spiel</h3>
-  <p>Letztes Spiel blabla</p>
+  <p>{{ team.lastGame.date | date:'dd.MM.yyyy' }} - <a href="#/games/{{ g.id }}">{{ team.lastGame.host.team.name }} vs {{ team.lastGame.guest.team.name }}</a> <span ng-show="g.host.score">- ({{ team.lastGame.host.score}} : {{ team.lastGame.guest.score }})</span></p>
 
 <h2 class="sub-header">Statistik</h2>
   <p>Blabla Team Statistiken Blabla</p>
@@ -69,90 +85,8 @@
         <td>cursus</td>
         <td>ante</td>
       </tr>
-      <tr>
-        <td>1,004</td>
-        <td>dapibus</td>
-        <td>diam</td>
-        <td>Sed</td>
-        <td>nisi</td>
-      </tr>
-      <tr>
-        <td>1,005</td>
-        <td>Nulla</td>
-        <td>quis</td>
-        <td>sem</td>
-        <td>at</td>
-      </tr>
-      <tr>
-        <td>1,006</td>
-        <td>nibh</td>
-        <td>elementum</td>
-        <td>imperdiet</td>
-        <td>Duis</td>
-      </tr>
-      <tr>
-        <td>1,007</td>
-        <td>sagittis</td>
-        <td>ipsum</td>
-        <td>Praesent</td>
-        <td>mauris</td>
-      </tr>
-      <tr>
-        <td>1,008</td>
-        <td>Fusce</td>
-        <td>nec</td>
-        <td>tellus</td>
-        <td>sed</td>
-      </tr>
-      <tr>
-        <td>1,009</td>
-        <td>augue</td>
-        <td>semper</td>
-        <td>porta</td>
-        <td>Mauris</td>
-      </tr>
-      <tr>
-        <td>1,010</td>
-        <td>massa</td>
-        <td>Vestibulum</td>
-        <td>lacinia</td>
-        <td>arcu</td>
-      </tr>
-      <tr>
-        <td>1,011</td>
-        <td>eget</td>
-        <td>nulla</td>
-        <td>Class</td>
-        <td>aptent</td>
-      </tr>
-      <tr>
-        <td>1,012</td>
-        <td>taciti</td>
-        <td>sociosqu</td>
-        <td>ad</td>
-        <td>litora</td>
-      </tr>
-      <tr>
-        <td>1,013</td>
-        <td>torquent</td>
-        <td>per</td>
-        <td>conubia</td>
-        <td>nostra</td>
-      </tr>
-      <tr>
-        <td>1,014</td>
-        <td>per</td>
-        <td>inceptos</td>
-        <td>himenaeos</td>
-        <td>Curabitur</td>
-      </tr>
-      <tr>
-        <td>1,015</td>
-        <td>sodales</td>
-        <td>ligula</td>
-        <td>in</td>
-        <td>libero</td>
-      </tr>
     </tbody>
   </table>
 </div>
+
+{{sidebar}}
