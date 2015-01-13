@@ -8,11 +8,13 @@ srsApp.setAuthorizationHeader = function($http, $window, token){
   	if(token != "undefined" && token != undefined) {
 		console.log("logged in");
 		$('#nav-item-login').hide();
+		$('#nav-item-profile').show();
 		$('#nav-item-logout').show();
 		$http.defaults.headers.common.Authorization = 'JWT '+token;
 		console.log("set http header: " + $http.defaults.headers.common.Authorization);
 	} else {
 		$('#nav-item-login').show();
+		$('#nav-item-profile').hide();
 		$('#nav-item-logout').hide();
 		$http.defaults.headers.common.Authorization = undefined;
 		console.log("reset http header");
@@ -86,6 +88,11 @@ srsApp.config(function ($routeProvider){
 			controller : 'LoginController',
 			templateUrl : 'views/login.html'
 		})
+		.when('/profile',
+		{
+			//controller : 'LoginController',
+			templateUrl : 'views/profile.html'
+		})
 		.otherwise({ redirectTo: '/' });
 });
 
@@ -136,7 +143,7 @@ function SwissRugbyStatsController($scope, $routeParams, $filter, $http) {
 	}
 }
 
-function RefereeController($scope, $routeParams, $filter, $http, $window) {
+function RefereeController($scope, $routeParams, $filter, $http) {
 	
 	$scope.sidebar = {};
 	$scope.referees = {};
@@ -178,7 +185,7 @@ function VenueController($scope, $routeParams, $filter, $http) {
 	}
 }
 
-function LoginController($scope, $routeParams, $filter, $http, $window) {
+function LoginController($scope, $routeParams, $filter, $http, $window, $rootScope) {
 	
 	$scope.sidebar = {};
 	$scope.venues = {};
@@ -187,9 +194,11 @@ function LoginController($scope, $routeParams, $filter, $http, $window) {
 		console.log("logout");
 		srsApp.resetAuthorizationHeader($http,$window);
 	}
-	
+
+	/* Login function, called by login form */
 	$scope.getAuthToken = function() {
-		console.log("logger");
+
+		$rootScope.username = $scope.user.username;
 		$http.post(apiurl+'/api-token-auth/', $scope.user)
 		    .success(function(data, status, headers, config) {
 		       $scope.token = data.token;
@@ -200,7 +209,10 @@ function LoginController($scope, $routeParams, $filter, $http, $window) {
 		    .error(function(data, status, headers, config) {
 		    	console.log("error logging in: " + status);
 		    });
+	}
 
+	$scope.createUser = function() {
+		alert("ok");
 	}
 }
 
