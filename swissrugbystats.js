@@ -1,5 +1,33 @@
 var srsApp = angular.module('srsApp',['ngRoute']);
-var apiurl = "http://api.swissrugbystats.ch";
+//var apiurl = "http://api.swissrugbystats.ch";
+var apiurl = "http://127.0.0.1:8000";
+
+srsApp.setAuthorizationHeader = function($http, $window, token){
+	$window.sessionStorage.token = token;
+
+  	if(token != "undefined" && token != undefined) {
+		console.log("logged in");
+		$('#nav-item-login').hide();
+		$('#nav-item-logout').show();
+		$http.defaults.headers.common.Authorization = 'JWT '+token;
+		console.log("set http header: " + $http.defaults.headers.common.Authorization);
+	} else {
+		$('#nav-item-login').show();
+		$('#nav-item-logout').hide();
+		$http.defaults.headers.common.Authorization = undefined;
+		console.log("reset http header");
+	}
+};
+
+srsApp.resetAuthorizationHeader = function($http, $window){
+	srsApp.setAuthorizationHeader($http, $window, "undefined");
+  	
+};
+
+srsApp.run(function($http, $window) {
+	srsApp.setAuthorizationHeader($http, $window, $window.sessionStorage.token);
+});
+
 
 
 // Routing
@@ -53,6 +81,11 @@ srsApp.config(function ($routeProvider){
 		{
 			templateUrl : 'views/about.html'
 		})
+		.when('/login',
+		{
+			controller : 'LoginController',
+			templateUrl : 'views/login.html'
+		})
 		.otherwise({ redirectTo: '/' });
 });
 
@@ -103,14 +136,18 @@ function SwissRugbyStatsController($scope, $routeParams, $filter, $http) {
 	}
 }
 
-function RefereeController($scope, $routeParams, $filter, $http) {
+function RefereeController($scope, $routeParams, $filter, $http, $window) {
 	
 	$scope.sidebar = {};
 	$scope.referees = {};
-	$http.get(apiurl+'/referees/.json').
-        success(function(data) {
+
+	$http.get(apiurl+'/referees/.json')
+        .success(function(data) {
             $scope.referees = data;
-    });
+    	})
+    	.error(function(data) {
+    		console.log("error" + data.detail);
+    	});
 }
 
 function LeagueController($scope, $routeParams, $filter, $http) {
@@ -138,6 +175,32 @@ function VenueController($scope, $routeParams, $filter, $http) {
 	        success(function(data) {
 	            $scope.venues = data;
 	    });
+	}
+}
+
+function LoginController($scope, $routeParams, $filter, $http, $window) {
+	
+	$scope.sidebar = {};
+	$scope.venues = {};
+
+	if($routeParams.logout==1) {
+		console.log("logout");
+		srsApp.resetAuthorizationHeader($http,$window);
+	}
+	
+	$scope.getAuthToken = function() {
+		console.log("logger");
+		$http.post(apiurl+'/api-token-auth/', $scope.user)
+		    .success(function(data, status, headers, config) {
+		       $scope.token = data.token;
+		       srsApp.setAuthorizationHeader($http, $window, data.token);
+		       console.log("successfully logged in");
+		       window.location.href = '#/';
+		    })
+		    .error(function(data, status, headers, config) {
+		    	console.log("error logging in: " + status);
+		    });
+
 	}
 }
 
@@ -182,6 +245,7 @@ srsApp.controller('RefereeController', RefereeController);
 srsApp.controller('LeagueController', LeagueController);
 srsApp.controller('VenueController', VenueController);
 srsApp.controller('GameController', GameController);
+srsApp.controller('LoginController', LoginController);
 
 srsApp.run(function($rootScope, $location, $anchorScroll, $routeParams) {
   //when the route is changed scroll to the proper element.

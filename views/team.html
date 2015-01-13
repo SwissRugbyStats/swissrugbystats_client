@@ -30,16 +30,18 @@
 </div>
 
  <h2 class="sub-header">Spiele</h2>
+  <h3 class="sub-header">Nächstes Spiel</h3>
+  <p>{{ team.nextGame.date | date:'dd.MM.yyyy' }} - <a href="#/games/{{ team.nextGame.id }}">{{ team.nextGame.host.team.name }} vs {{ team.nextGame.guest.team.name }}</a> <span ng-show="g.host.score">- ({{ team.nextGame.host.score}} : {{ team.nextGame.guest.score }})</span></p>
+  <h3 class="sub-header">Letztes Spiel</h3>
+  <p>{{ team.lastGame.date | date:'dd.MM.yyyy' }} - <a href="#/games/{{ team.lastGame.id }}">{{ team.lastGame.host.team.name }} vs {{ team.lastGame.guest.team.name }}</a> <span ng-show="g.host.score">- ({{ team.lastGame.host.score}} : {{ team.lastGame.guest.score }})</span></p>
+
   <h3>Alle Spiele</h3>
   <ul>
     <li data-ng-repeat="g in games | filter:gameParticipantFilter">
       {{ g.date | date:'dd.MM.yyyy' }} - <a href="#/games/{{ g.id }}">{{ g.host.team.name }} vs {{ g.guest.team.name }}</a> <span ng-show="g.host.score">- ({{ g.host.score}} : {{ g.guest.score }})</span></li>
   </ul>
 
-  <h3 class="sub-header">Nächstes Spiel</h3>
-  <p>{{ team.nextGame.date | date:'dd.MM.yyyy' }} - <a href="#/games/{{ g.id }}">{{ team.nextGame.host.team.name }} vs {{ team.nextGame.guest.team.name }}</a> <span ng-show="g.host.score">- ({{ team.nextGame.host.score}} : {{ team.nextGame.guest.score }})</span></p>
-  <h3 class="sub-header">Letztes Spiel</h3>
-  <p>{{ team.lastGame.date | date:'dd.MM.yyyy' }} - <a href="#/games/{{ g.id }}">{{ team.lastGame.host.team.name }} vs {{ team.lastGame.guest.team.name }}</a> <span ng-show="g.host.score">- ({{ team.lastGame.host.score}} : {{ team.lastGame.guest.score }})</span></p>
+  
 
 <h2 class="sub-header">Statistik</h2>
   <p>Blabla Team Statistiken Blabla</p>

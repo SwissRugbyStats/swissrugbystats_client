@@ -16,8 +16,12 @@
 <div class="jumbotron">
   <h1 class="page-header">Teams</h1>
 </div>
+	
+	<p>
+	Filter: <input data-ng-model="filter" type="text"></input><br/>
+	</p>
 
    <ul>
-    <li data-ng-repeat="t in teams">
+    <li data-ng-repeat="t in teams | filter:filter">
       <a href="#/teams/{{t.id}}">{{t.name}}</a></li>
   </ul>
