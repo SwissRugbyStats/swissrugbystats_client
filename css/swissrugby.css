@@ -136,9 +136,18 @@ body {
   height: 500px;
 }
 
-form#regForm input.ng-invalid {
+#regForm input.ng-invalid {
   border: 1px solid red;
 }
-form#regForm input.ng-valid {
+#regForm input.ng-valid {
   border: 1px solid green;
+}
+
+.favorize {
+  font-size: 2em;
+  cursor: pointer;
+}
+
+.favorize:hover {
+  color: #428BCA;
 }

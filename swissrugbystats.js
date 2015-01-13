@@ -1,6 +1,6 @@
 var srsApp = angular.module('srsApp',['ngRoute']);
-//var apiurl = "http://api.swissrugbystats.ch";
-var apiurl = "http://127.0.0.1:8000";
+var apiurl = "http://api.swissrugbystats.ch";
+//var apiurl = "http://127.0.0.1:8000";
 
 srsApp.setAuthorizationHeader = function($http, $window, token){
 	$window.sessionStorage.token = token;
@@ -122,6 +122,11 @@ function SwissRugbyStatsController($scope, $routeParams, $filter, $http) {
         success(function(data) {
             $scope.games = data;
     });
+
+    $scope.addFavorite = function() {
+    	// TODO: check if logged in, otherwise provide link to login / register page
+    	alert("will add favorite someday");
+    }
     
 
     // custom filters
@@ -212,7 +217,15 @@ function LoginController($scope, $routeParams, $filter, $http, $window, $rootSco
 	}
 
 	$scope.createUser = function() {
-		alert("ok");
+		console.log(JSON.stringify($scope.user));
+		$http.post(apiurl+'/users/', $scope.user).
+	        success(function(data) {
+	            $scope.game = data;
+	            console.log("success! "+JSON.stringify(data));
+	    	}).
+	    	error(function(status, data) {
+	    		console.log("error: " + JSON.stringify(status));
+	    	});
 	}
 }
 
@@ -249,6 +262,9 @@ function GameController($scope, $routeParams, $filter, $http) {
 	    } else {
 	    	return $scope.games;
 	    }
+	}
+	$scope.areNotEqual = function (actual, expected) {
+		return actual !== expected;
 	}
 }
 
