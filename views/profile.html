@@ -14,5 +14,19 @@
 <!-- content -->
 
 <div class="jumbotron">
-  <h1 class="page-header">Profile</h1>
+  <h1 class="page-header"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profile</h1>
 </div>
+
+Welcome back {{username}}!
+
+<h2 class="sub-header">Favorite teams</h2>
+<ul>
+  <li data-ng-repeat="f in favorites | filter:username">
+    <a href="#/teams/{{f.team.id}}">{{f.team.name}}</a></li>
+</ul>
+
+<!--
+<h2 class="sub-header">Settings</h2>
+
+<h3 class="sub-header">Change password</h2>
+-->

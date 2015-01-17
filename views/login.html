@@ -20,6 +20,11 @@
       <h3 class="panel-title">Login</h3>
     </div>
     <div class="panel-body">
+      <div class="alert alert-danger" data-ng-if="loginError">
+        <span  class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          <span class="sr-only">Error:</span>
+          {{loginError}}
+      </div>
       <form ng-submit="getAuthToken()">
         <div class="form-group">
           <label for="exampleInputEmail1">Email address</label>

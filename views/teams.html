@@ -17,9 +17,12 @@
   <h1 class="page-header">Teams</h1>
 </div>
 	
-	<p>
-	Filter: <input data-ng-model="filter" type="text"></input><br/>
-	</p>
+  <div class="input-group">
+    <span class="input-group-addon" id="basic-addon1">Filter: </span>
+    <input type="text" data-ng-model="filter" class="form-control" placeholder="Team name" aria-describedby="basic-addon1">
+  </div>
+
+  <hr>
 
    <ul>
     <li data-ng-repeat="t in teams | filter:filter">

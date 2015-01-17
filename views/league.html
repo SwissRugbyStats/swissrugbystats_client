@@ -9,17 +9,18 @@
     <ol class="breadcrumb">
         <li><a href="#/">Home</a></li>
         <li><a href="#/leagues">Leagues</a></li>
+        <li><a href="#/leagues/{{league.id}}">{{league.name}}</a></li>
     </ol>
 
 </div>
 
 <div class="jumbotron">
-  <h1 class="page-header">Leagues</h1>
+  <h1 class="page-header">{{league.name}} ({{league.shortCode}})</h1>
 </div>
 
    <ul>
-    <li data-ng-repeat="l in leagues">
-      <a href="#/leagues/{{l.id}}">{{l.name}}</a></li>
+    <li data-ng-repeat="g in league.league_games">
+      {{ g.date | date:'dd.MM.yyyy' }} - <a href="#/games/{{ g.id }}">{{ g.host.team.name }} vs {{ g.guest.team.name }}</a> <span ng-show="g.host.score">- ({{ g.host.score}} : {{ g.guest.score }})</span></li>
   </ul>
 
  

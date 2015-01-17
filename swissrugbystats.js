@@ -1,6 +1,6 @@
 var srsApp = angular.module('srsApp',['ngRoute']);
-var apiurl = "http://api.swissrugbystats.ch";
-//var apiurl = "http://127.0.0.1:8000";
+//var apiurl = "http://api.swissrugbystats.ch";
+var apiurl = "http://127.0.0.1:8000";
 
 srsApp.setAuthorizationHeader = function($http, $window, token){
 	$window.sessionStorage.token = token;
@@ -43,6 +43,11 @@ srsApp.config(function ($routeProvider){
 		{
 			controller : 'LeagueController',
 			templateUrl : 'views/leagues.html'
+		})
+		.when('/leagues/:leagueId',
+		{
+			controller : 'LeagueController',
+			templateUrl : 'views/league.html'
 		})
 		.when('/venues',
 		{
@@ -90,7 +95,7 @@ srsApp.config(function ($routeProvider){
 		})
 		.when('/profile',
 		{
-			//controller : 'LoginController',
+			controller : 'ProfileController',
 			templateUrl : 'views/profile.html'
 		})
 		.otherwise({ redirectTo: '/' });
@@ -125,7 +130,30 @@ function SwissRugbyStatsController($scope, $routeParams, $filter, $http) {
 
     $scope.addFavorite = function() {
     	// TODO: check if logged in, otherwise provide link to login / register page
-    	alert("will add favorite someday");
+    	if (window.sessionStorage.token) {
+			var params = { "team" : $scope.team.id, "user" : 1 }
+    		console.log(params)
+    		$http.post(apiurl+'/favorites/', params).
+       			success(function(data, staus, header) {
+         			console.log("Favorite added.")
+         			$scope.success = $scope.team.name +" added to favorites";
+    			}).
+    			error(function(data, status) {
+    				if (status === 409) {
+    					console.log("Already favorited");
+    					$scope.info = $scope.team.name +" already added to favorites";
+    				} else {
+    					console.log("Error adding favorite: "+status)
+    					$scope.error = "There was an error when trying to add "+ $scope.team.name +" to favorites";
+    				}
+    			});
+    	} else {
+    		$scope.info = "You need to log in to be able to save favorites."
+    	}
+
+    	$('#nav-item-login').hide();
+		$('#nav-item-profile').show();
+		$('#nav-item-logout').show();
     }
     
 
@@ -166,10 +194,21 @@ function LeagueController($scope, $routeParams, $filter, $http) {
 	
 	$scope.sidebar = {};
 	$scope.leagues = {};
-	$http.get(apiurl+'/leagues/.json').
-        success(function(data) {
-            $scope.leagues = data;
-    });
+	if (Object.keys($routeParams).length != 0) {
+		$http.get(apiurl+'/leagues/'+$routeParams.leagueId).
+	        success(function(data) {
+	            $scope.league = data;
+	    	}).
+	    	error(function(data, status) {
+	    		console.log("error: " + status);
+	    	});
+	} else {
+		$http.get(apiurl+'/leagues/.json').
+	        success(function(data) {
+	            $scope.leagues = data;
+	    });
+	}
+
 }
 
 function VenueController($scope, $routeParams, $filter, $http) {
@@ -198,6 +237,8 @@ function LoginController($scope, $routeParams, $filter, $http, $window, $rootSco
 	if($routeParams.logout==1) {
 		console.log("logout");
 		srsApp.resetAuthorizationHeader($http,$window);
+		window.sessionStorage.username = undefined;
+		window.sessionStorage.id = undefined;
 	}
 
 	/* Login function, called by login form */
@@ -208,11 +249,13 @@ function LoginController($scope, $routeParams, $filter, $http, $window, $rootSco
 		    .success(function(data, status, headers, config) {
 		       $scope.token = data.token;
 		       srsApp.setAuthorizationHeader($http, $window, data.token);
+		       window.sessionStorage.username = $scope.user.username;
 		       console.log("successfully logged in");
-		       window.location.href = '#/';
+		       window.location.href = '#/profile';
 		    })
 		    .error(function(data, status, headers, config) {
 		    	console.log("error logging in: " + status);
+		    	$scope.loginError = "Error logging in. Recheck username and password."
 		    });
 	}
 
@@ -227,6 +270,18 @@ function LoginController($scope, $routeParams, $filter, $http, $window, $rootSco
 	    		console.log("error: " + JSON.stringify(status));
 	    	});
 	}
+}
+
+function ProfileController($scope, $routeParams, $filter, $http, $window, $rootScope) {
+	$http.get(apiurl + "/favorites/.json").
+		success(function(data) {
+			$scope.favorites = data;
+			$scope.userId = window.sessionStorage.id;
+			$scope.username = window.sessionStorage.username;
+		}).
+		error(function(data, status){
+			console.log("eror: "+status);
+		})
 }
 
 function GameController($scope, $routeParams, $filter, $http) {
@@ -274,6 +329,7 @@ srsApp.controller('LeagueController', LeagueController);
 srsApp.controller('VenueController', VenueController);
 srsApp.controller('GameController', GameController);
 srsApp.controller('LoginController', LoginController);
+srsApp.controller('ProfileController', ProfileController);
 
 srsApp.run(function($rootScope, $location, $anchorScroll, $routeParams) {
   //when the route is changed scroll to the proper element.

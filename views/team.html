@@ -1,27 +1,28 @@
 <!-- here is an additional section of the view -->
 <script type="text/ng-template" id="team_sb.html" ng-init="$parent.sidebar='team_sb.html'">
-    <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-    <li><a href="#">Spiele</a></li>
-    <li><a href="#">Statistik</a></li>
-    <li><a href="#">Spieler</a>
-
-    <li><a href="">Club Website</a></li>
-    <li><a href="">Club Facebook</a></li>
-    <li><a href="">Club Twitter</a></li>
+    
 </script>
 
-
-
-<div>
-    <ol class="breadcrumb">
-        <li><a href="#/">Home</a></li>
-        <li><a href="#/teams">Teams</a></li>
-        <li><a href="#/teams/{{team.id}}">{{team.name}}</a></li>
-    </ol>
-
+<!-- Notifications -->
+<div class="alert alert-danger" data-ng-if="error">
+  <span  class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">Error:</span>
+  {{error}}
 </div>
+<div class="alert alert-info" data-ng-if="info">
+  <span  class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+  <span class="sr-only">Info:</span>
+  {{info}}
+</div>
+<div class="alert alert-success" data-ng-if="success">
+  <span  class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+  <span class="sr-only">Success:</span>
+  {{success}}
+</div>
+<!-- end notifications -->
 
-<div class="jumbotron">
+
+<div class="jumbotron" id="overview">
   <span title="Add to favorites" class="glyphicon glyphicon-star-empty pull-right favorize" aria-hidden="true" data-ng-click="addFavorite()"></span>
   <h1 class="page-header">{{team.name}}</h1>
   <img src="{{team.logo}}">
@@ -30,20 +31,20 @@
       Lost games: {{team.lossCount}}</p>
 </div>
 
- <h2 class="sub-header">Spiele</h2>
-  <h3 class="sub-header">Nächstes Spiel</h3>
+ <h2 class="sub-header" id="games">Games</h2>
+  <h3 class="sub-header">Next Game</h3>
   <p>{{ team.nextGame.date | date:'dd.MM.yyyy' }} - <a href="#/games/{{ team.nextGame.id }}">{{ team.nextGame.host.team.name }} vs {{ team.nextGame.guest.team.name }}</a> <span ng-show="g.host.score">- ({{ team.nextGame.host.score}} : {{ team.nextGame.guest.score }})</span></p>
-  <h3 class="sub-header">Letztes Spiel</h3>
+  <h3 class="sub-header">Last Game</h3>
   <p>{{ team.lastGame.date | date:'dd.MM.yyyy' }} - <a href="#/games/{{ team.lastGame.id }}">{{ team.lastGame.host.team.name }} vs {{ team.lastGame.guest.team.name }}</a> <span ng-show="g.host.score">- ({{ team.lastGame.host.score}} : {{ team.lastGame.guest.score }})</span></p>
 
-  <h3>Alle Spiele</h3>
+  <h3><span class="glyphicon glyphicon-calendar"></span> Game Schedule</h3>
   <ul>
     <li data-ng-repeat="g in games | filter:gameParticipantFilter">
       {{ g.date | date:'dd.MM.yyyy' }} - <a href="#/games/{{ g.id }}">{{ g.host.team.name }} vs {{ g.guest.team.name }}</a> <span ng-show="g.host.score">- ({{ g.host.score}} : {{ g.guest.score }})</span></li>
   </ul>
 
   
-
+<!--
 <h2 class="sub-header">Statistik</h2>
   <p>Blabla Team Statistiken Blabla</p>
 
@@ -93,3 +94,5 @@
 </div>
 
 {{sidebar}}
+
+-->
