@@ -1,6 +1,6 @@
 var srsApp = angular.module('srsApp',['ngRoute']);
-var apiurl = "http://api.swissrugbystats.ch";
-//var apiurl = "http://127.0.0.1:8000";
+//var apiurl = "http://api.swissrugbystats.ch";
+var apiurl = "http://127.0.0.1:8000";
 
 srsApp.setAuthorizationHeader = function($http, $window, token){
 	$window.sessionStorage.token = token;
@@ -244,6 +244,8 @@ function LoginController($scope, $routeParams, $filter, $http, $window, $rootSco
 	/* Login function, called by login form */
 	$scope.getAuthToken = function() {
 
+		console.log(JSON.stringify($scope.user));
+
 		$rootScope.username = $scope.user.username;
 		$http.post(apiurl+'/api-token-auth/', $scope.user)
 		    .success(function(data, status, headers, config) {
@@ -256,15 +258,17 @@ function LoginController($scope, $routeParams, $filter, $http, $window, $rootSco
 		    .error(function(data, status, headers, config) {
 		    	console.log("error logging in: " + status);
 		    	$scope.loginError = "Error logging in. Recheck username and password."
+		    	console.log("ERROR: "+JSON.stringify(data));
 		    });
 	}
 
 	$scope.createUser = function() {
-		console.log(JSON.stringify($scope.user));
+		//console.log(JSON.stringify($scope.user));
 		$http.post(apiurl+'/users/', $scope.user).
 	        success(function(data) {
-	            $scope.game = data;
 	            console.log("success! "+JSON.stringify(data));
+	            $scope.user = { "username" : $scope.user.username, "password" : $scope.user.password };
+	            $scope.getAuthToken();
 	    	}).
 	    	error(function(status, data) {
 	    		console.log("error: " + JSON.stringify(status));
