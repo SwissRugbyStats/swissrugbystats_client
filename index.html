@@ -10,6 +10,9 @@
 
     <title>Swiss Rugby Stats BETA</title>
 
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
     <!-- Angular JS -->
     <script src="js/angular.js"></script>
     <script src="js/angular-route.js"></script>
@@ -42,7 +45,7 @@
           <a class="navbar-brand" href="#/"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Swiss Rugby Stats <span class="beta">BETA</span></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-left" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <ul class="nav navbar-nav navbar-left" data-ng-click="hideNav()">
             <li><a href="#/leagues">Leagues</a></li>
             <!--<li><a href="#/clubs">Clubs</a></li>-->
             <li><a href="#/teams">Teams</a></li>
@@ -56,7 +59,7 @@
           <!--<form class="navbar-form navbar-left">
             <input type="text" class="form-control" placeholder="Search...">
           </form>-->
-          <ul class="nav navbar-nav navbar-right" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <ul class="nav navbar-nav navbar-right" data-ng-click="hideNav()">
             <li id="nav-item-login"><a href="#/login">
               <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> 
               Login / Register</a>
@@ -117,7 +120,6 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
   </body>
 </html>

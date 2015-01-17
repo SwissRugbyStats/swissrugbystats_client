@@ -26,8 +26,11 @@ srsApp.resetAuthorizationHeader = function($http, $window){
   	
 };
 
-srsApp.run(function($http, $window) {
+srsApp.run(function($http, $window, $rootScope) {
 	srsApp.setAuthorizationHeader($http, $window, $window.sessionStorage.token);
+	$rootScope.hideNav = function() {
+            $('#navbar').collapse('hide');
+        };
 });
 
 
