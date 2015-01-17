@@ -1,6 +1,6 @@
 var srsApp = angular.module('srsApp',['ngRoute']);
-//var apiurl = "http://api.swissrugbystats.ch";
-var apiurl = "http://127.0.0.1:8000";
+var apiurl = "http://api.swissrugbystats.ch";
+//var apiurl = "http://127.0.0.1:8000";
 
 srsApp.setAuthorizationHeader = function($http, $window, token){
 	$window.sessionStorage.token = token;
