@@ -4,8 +4,9 @@ swissrugbystats_client
 
 place this in your website where you want to display your schedule:
 
-    <div id="srs-schedule" data-teamid="21" data-seasonid="1">loading...</div>
+    <div class="srs-schedule" data-teamid="21" data-seasonid="1">loading...</div>
 
+you can place multiple schedules on one page
 
 other possible snippets:
 
