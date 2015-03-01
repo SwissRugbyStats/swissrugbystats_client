@@ -79,7 +79,7 @@ srsApp.config(function ($routeProvider){
 		})
 		.when('/teams/:teamId',
 		{
-			controller : 'SwissRugbyStatsController',
+			controller : 'TeamController',
 			templateUrl : 'views/team.html'
 		})
 		.when('/referees',
@@ -177,6 +177,32 @@ function SwissRugbyStatsController($scope, $routeParams, $filter, $http) {
 	$scope.exactMatch = function (team) {
 		return team.id == $scope.teamId;
 	}
+}
+
+function TeamController($scope, $routeParams, $filter, $http) {
+	$scope.teams = {};
+	$scope.sidebar = {};
+	if (Object.keys($routeParams).length != 0) {
+		$scope.params = $routeParams;
+		$scope.teamId = $routeParams.teamId;
+		$http.get(apiurl +'/teams/'+$scope.teamId+'/.json').
+    	success(function(data) {
+	        $scope.team = data;
+    	});
+    	$scope.sidebar = "test";
+    	console.log($scope.sidebar);
+	} else {
+		$http.get(apiurl +'/teams/.json').
+    	success(function(data) {
+        	$scope.teams = data;
+    	});
+	}
+
+	$scope.games = {};
+	$http.get(apiurl+'/teams/'+$scope.teamId+'/games.json').
+        success(function(data) {
+            $scope.games = data;
+    });
 }
 
 function RefereeController($scope, $routeParams, $filter, $http) {
@@ -331,6 +357,7 @@ function GameController($scope, $routeParams, $filter, $http) {
 }
 
 srsApp.controller('SwissRugbyStatsController', SwissRugbyStatsController);
+srsApp.controller('TeamController', TeamController);
 srsApp.controller('RefereeController', RefereeController);
 srsApp.controller('LeagueController', LeagueController);
 srsApp.controller('VenueController', VenueController);
