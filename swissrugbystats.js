@@ -112,21 +112,21 @@ function SwissRugbyStatsController($scope, $routeParams, $filter, $http) {
 	if (Object.keys($routeParams).length != 0) {
 		$scope.params = $routeParams;
 		$scope.teamId = $routeParams.teamId;
-		$http.get(apiurl +'/teams/'+$scope.teamId+'/.json').
+		$http.get(apiurl +'/teams/'+$scope.teamId+'.json').
     	success(function(data) {
 	        $scope.team = data;
     	});
     	$scope.sidebar = "test";
     	console.log($scope.sidebar);
 	} else {
-		$http.get(apiurl +'/teams/.json').
+		$http.get(apiurl +'/teams.json').
     	success(function(data) {
         	$scope.teams = data;
     	});
 	}
 
 	$scope.games = {};
-	$http.get(apiurl+'/games/.json').
+	$http.get(apiurl+'/games.json').
         success(function(data) {
             $scope.games = data;
     });
@@ -185,14 +185,14 @@ function TeamController($scope, $routeParams, $filter, $http) {
 	if (Object.keys($routeParams).length != 0) {
 		$scope.params = $routeParams;
 		$scope.teamId = $routeParams.teamId;
-		$http.get(apiurl +'/teams/'+$scope.teamId+'/.json').
+		$http.get(apiurl +'/teams/'+$scope.teamId+'.json').
     	success(function(data) {
 	        $scope.team = data;
     	});
     	$scope.sidebar = "test";
     	console.log($scope.sidebar);
 	} else {
-		$http.get(apiurl +'/teams/.json').
+		$http.get(apiurl +'/teams.json').
     	success(function(data) {
         	$scope.teams = data;
     	});
@@ -210,7 +210,7 @@ function RefereeController($scope, $routeParams, $filter, $http) {
 	$scope.sidebar = {};
 	$scope.referees = {};
 
-	$http.get(apiurl+'/referees/.json')
+	$http.get(apiurl+'/referees.json')
         .success(function(data) {
             $scope.referees = data;
     	})
@@ -232,7 +232,7 @@ function LeagueController($scope, $routeParams, $filter, $http) {
 	    		console.log("error: " + status);
 	    	});
 	} else {
-		$http.get(apiurl+'/leagues/.json').
+		$http.get(apiurl+'/leagues.json').
 	        success(function(data) {
 	            $scope.leagues = data;
 	    });
@@ -246,12 +246,12 @@ function VenueController($scope, $routeParams, $filter, $http) {
 	$scope.venues = {};
 	if (Object.keys($routeParams).length != 0) {
 		$scope.venueId = $routeParams.venueId;
-		$http.get(apiurl+'/venues/'+$scope.venueId+'/.json').
+		$http.get(apiurl+'/venues/'+$scope.venueId+'.json').
 			success(function(data) {
 	            $scope.venue = data;
 	    });
 	} else {
-		$http.get(apiurl+'/venues/.json').
+		$http.get(apiurl+'/venues.json').
 	        success(function(data) {
 	            $scope.venues = data;
 	    });
@@ -306,7 +306,7 @@ function LoginController($scope, $routeParams, $filter, $http, $window, $rootSco
 }
 
 function ProfileController($scope, $routeParams, $filter, $http, $window, $rootScope) {
-	$http.get(apiurl + "/favorites/.json").
+	$http.get(apiurl + "/favorites.json").
 		success(function(data) {
 			$scope.favorites = data;
 			$scope.userId = window.sessionStorage.id;
@@ -323,7 +323,7 @@ function GameController($scope, $routeParams, $filter, $http) {
 	$scope.gameId = $routeParams.gameId;
 
 	$scope.game = {};
-	$http.get(apiurl+'/games/'+$scope.gameId+'/.json').
+	$http.get(apiurl+'/games/'+$scope.gameId+'.json').
         success(function(data) {
             $scope.game = data;
             $scope.team1 = $scope.game.host.team;
@@ -332,7 +332,7 @@ function GameController($scope, $routeParams, $filter, $http) {
 
     // TODO: merge with SwissRugbyController
     $scope.games = {};
-	$http.get(apiurl+'/games/.json').
+	$http.get(apiurl+'/games.json').
         success(function(data) {
             $scope.games = data;
     });
