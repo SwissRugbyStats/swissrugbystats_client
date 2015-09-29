@@ -1,35 +1,41 @@
+'use strict'
+
 var srsApp = angular.module('srsApp',['ngRoute']);
-var apiurl = "http://api.swissrugbystats.ch";
-//var apiurl = "http://127.0.0.1:8000";
+var apiurl = 'http://api.swissrugbystats.ch';
+//var apiurl = 'http://127.0.0.1:8000';
 
 srsApp.setAuthorizationHeader = function($http, $window, token){
 	$window.sessionStorage.token = token;
 
-  	if(token != "undefined" && token != undefined) {
-		console.log("logged in");
+  	if(token != 'undefined' && token !== undefined) {
+		console.log('logged in');
 		$('#nav-item-login').hide();
 		$('#nav-item-profile').show();
 		$('#nav-item-logout').show();
 		$http.defaults.headers.common.Authorization = 'JWT '+token;
-		console.log("set http header: " + $http.defaults.headers.common.Authorization);
+		console.log('set http header: ' + $http.defaults.headers.common.Authorization);
 	} else {
 		$('#nav-item-login').show();
 		$('#nav-item-profile').hide();
 		$('#nav-item-logout').hide();
 		$http.defaults.headers.common.Authorization = undefined;
-		console.log("reset http header");
+		console.log('reset http header');
 	}
 };
 
 srsApp.resetAuthorizationHeader = function($http, $window){
-	srsApp.setAuthorizationHeader($http, $window, "undefined");
+	srsApp.setAuthorizationHeader($http, $window, 'undefined');
   	
 };
 
 srsApp.run(function($http, $window, $rootScope) {
 	srsApp.setAuthorizationHeader($http, $window, $window.sessionStorage.token);
 	$rootScope.hideNav = function() {
-            $('#navbar').collapse('hide');
+			/* only hide nav, if mobile */
+			var mq = window.matchMedia( '(max-width: 768px)' );
+			if(mq.matches){
+				$('#navbar').collapse('hide');
+			}
         };
 });
 
@@ -40,6 +46,7 @@ srsApp.config(function ($routeProvider){
 	$routeProvider
 		.when('/',
 		{
+			controller : 'NavigationController',
 			templateUrl : 'views/index.html'
 		})
 		.when('/leagues',
@@ -109,24 +116,24 @@ function SwissRugbyStatsController($scope, $routeParams, $filter, $http) {
 	
 	$scope.teams = {};
 	$scope.sidebar = {};
-	if (Object.keys($routeParams).length != 0) {
+	if(Object.keys($routeParams).length !== 0) {
 		$scope.params = $routeParams;
 		$scope.teamId = $routeParams.teamId;
-		$http.get(apiurl +'/teams/'+$scope.teamId+'.json').
+		$http.get(apiurl +'/teams/'+$scope.teamId+'.json', { cache: true } ).
     	success(function(data) {
 	        $scope.team = data;
     	});
-    	$scope.sidebar = "test";
+    	$scope.sidebar = 'test';
     	console.log($scope.sidebar);
 	} else {
-		$http.get(apiurl +'/teams.json').
+		$http.get(apiurl +'/teams.json', { cache: true } ).
     	success(function(data) {
         	$scope.teams = data;
     	});
 	}
 
 	$scope.games = {};
-	$http.get(apiurl+'/games.json').
+	$http.get(apiurl+'/games.json', { cache: true } ).
         success(function(data) {
             $scope.games = data;
     });
@@ -134,30 +141,30 @@ function SwissRugbyStatsController($scope, $routeParams, $filter, $http) {
     $scope.addFavorite = function() {
     	// TODO: check if logged in, otherwise provide link to login / register page
     	if (window.sessionStorage.token) {
-			var params = { "team" : $scope.team.id, "user" : 1 }
-    		console.log(params)
+			var params = { 'team' : $scope.team.id, 'user' : 1 }
+    		console.log(params);
     		$http.post(apiurl+'/favorites/', params).
        			success(function(data, staus, header) {
-         			console.log("Favorite added.")
-         			$scope.success = $scope.team.name +" added to favorites";
+         			console.log('Favorite added.');
+         			$scope.success = $scope.team.name +' added to favorites';
     			}).
     			error(function(data, status) {
     				if (status === 409) {
-    					console.log("Already favorited");
-    					$scope.info = $scope.team.name +" already added to favorites";
+    					console.log('Already favorited');
+    					$scope.info = $scope.team.name +' already added to favorites';
     				} else {
-    					console.log("Error adding favorite: "+status)
-    					$scope.error = "There was an error when trying to add "+ $scope.team.name +" to favorites";
+    					console.log('Error adding favorite: '+status);
+    					$scope.error = 'There was an error when trying to add '+ $scope.team.name +' to favorites';
     				}
     			});
     	} else {
-    		$scope.info = "You need to log in to be able to save favorites."
+    		$scope.info = 'You need to log in to be able to save favorites.';
     	}
 
     	$('#nav-item-login').hide();
 		$('#nav-item-profile').show();
 		$('#nav-item-logout').show();
-    }
+    };
     
 
     // custom filters
@@ -173,33 +180,33 @@ function SwissRugbyStatsController($scope, $routeParams, $filter, $http) {
 	    } else {
 	    	return $scope.games;
 	    }
-	}
+	};
 	$scope.exactMatch = function (team) {
 		return team.id == $scope.teamId;
-	}
+	};
 }
 
 function TeamController($scope, $routeParams, $filter, $http) {
 	$scope.teams = {};
 	$scope.sidebar = {};
-	if (Object.keys($routeParams).length != 0) {
+	if (Object.keys($routeParams).length !== 0) {
 		$scope.params = $routeParams;
 		$scope.teamId = $routeParams.teamId;
-		$http.get(apiurl +'/teams/'+$scope.teamId+'.json').
+		$http.get(apiurl +'/teams/'+$scope.teamId+'.json', { cache: true } ).
     	success(function(data) {
 	        $scope.team = data;
     	});
-    	$scope.sidebar = "test";
+    	$scope.sidebar = 'test';
     	console.log($scope.sidebar);
 	} else {
-		$http.get(apiurl +'/teams.json').
+		$http.get(apiurl +'/teams.json', { cache: true } ).
     	success(function(data) {
         	$scope.teams = data;
     	});
 	}
 
 	$scope.games = {};
-	$http.get(apiurl+'/teams/'+$scope.teamId+'/games.json').
+	$http.get(apiurl+'/teams/'+$scope.teamId+'/games.json', { cache: true } ).
         success(function(data) {
             $scope.games = data;
     });
@@ -210,12 +217,12 @@ function RefereeController($scope, $routeParams, $filter, $http) {
 	$scope.sidebar = {};
 	$scope.referees = {};
 
-	$http.get(apiurl+'/referees.json')
+	$http.get(apiurl+'/referees.json', { cache: true } )
         .success(function(data) {
             $scope.referees = data;
     	})
     	.error(function(data) {
-    		console.log("error" + data.detail);
+    		console.log('error' + data.detail);
     	});
 }
 
@@ -223,35 +230,57 @@ function LeagueController($scope, $routeParams, $filter, $http) {
 	
 	$scope.sidebar = {};
 	$scope.leagues = {};
-	if (Object.keys($routeParams).length != 0) {
-		$http.get(apiurl+'/leagues/'+$routeParams.leagueId).
+	if (Object.keys($routeParams).length !== 0) {
+		$http.get(apiurl+'/leagues/'+$routeParams.leagueId, { cache: true } ).
 	        success(function(data) {
 	            $scope.league = data;
 	    	}).
 	    	error(function(data, status) {
-	    		console.log("error: " + status);
+	    		console.log('error: ' + status);
 	    	});
 	} else {
-		$http.get(apiurl+'/leagues.json').
+		$http.get(apiurl+'/leagues.json', { cache: true } ).
 	        success(function(data) {
 	            $scope.leagues = data;
-	    });
+	    }).
+    	error(function(data, status) {
+    		console.log('error: ' + status);
+    	});
 	}
 
+}
+
+function NavigationController($scope, $routeParams, $filter, $http) {
+	$scope.leagues = {};
+	$scope.seasons = {};
+	$http.get(apiurl+'/leagues.json', { cache: true } ).
+	        success(function(data) {
+	            $scope.leagues = data;
+	    }).
+    	error(function(data, status) {
+    		console.log('error: ' + status);
+    	});
+    $http.get(apiurl+'/seasons.json', { cache: true } ).
+	        success(function(data) {
+	            $scope.seasons = data;
+	    }).
+    	error(function(data, status) {
+    		console.log('error: ' + status);
+    	});
 }
 
 function VenueController($scope, $routeParams, $filter, $http) {
 	
 	$scope.sidebar = {};
 	$scope.venues = {};
-	if (Object.keys($routeParams).length != 0) {
+	if (Object.keys($routeParams).length !== 0) {
 		$scope.venueId = $routeParams.venueId;
-		$http.get(apiurl+'/venues/'+$scope.venueId+'.json').
+		$http.get(apiurl+'/venues/'+$scope.venueId+'.json', { cache: true } ).
 			success(function(data) {
 	            $scope.venue = data;
 	    });
 	} else {
-		$http.get(apiurl+'/venues.json').
+		$http.get(apiurl+'/venues.json', { cache: true } ).
 	        success(function(data) {
 	            $scope.venues = data;
 	    });
@@ -264,7 +293,7 @@ function LoginController($scope, $routeParams, $filter, $http, $window, $rootSco
 	$scope.venues = {};
 
 	if($routeParams.logout==1) {
-		console.log("logout");
+		console.log('logout');
 		srsApp.resetAuthorizationHeader($http,$window);
 		window.sessionStorage.username = undefined;
 		window.sessionStorage.id = undefined;
@@ -281,40 +310,40 @@ function LoginController($scope, $routeParams, $filter, $http, $window, $rootSco
 		       $scope.token = data.token;
 		       srsApp.setAuthorizationHeader($http, $window, data.token);
 		       window.sessionStorage.username = $scope.user.username;
-		       console.log("successfully logged in");
+		       console.log('successfully logged in');
 		       window.location.href = '#/profile';
 		    })
 		    .error(function(data, status, headers, config) {
-		    	console.log("error logging in: " + status);
-		    	$scope.loginError = "Error logging in. Recheck username and password."
-		    	console.log("ERROR: "+JSON.stringify(data));
+		    	console.log('error logging in: ' + status);
+		    	$scope.loginError = 'Error logging in. Recheck username and password.';
+		    	console.log('ERROR: '+JSON.stringify(data));
 		    });
-	}
+	};
 
 	$scope.createUser = function() {
 		//console.log(JSON.stringify($scope.user));
 		$http.post(apiurl+'/users/', $scope.user).
 	        success(function(data) {
-	            console.log("success! "+JSON.stringify(data));
-	            $scope.user = { "username" : $scope.user.username, "password" : $scope.user.password };
+	            console.log('success! '+JSON.stringify(data));
+	            $scope.user = { 'username' : $scope.user.username, 'password' : $scope.user.password };
 	            $scope.getAuthToken();
 	    	}).
 	    	error(function(status, data) {
-	    		console.log("error: " + JSON.stringify(status));
+	    		console.log('error: ' + JSON.stringify(status));
 	    	});
-	}
+	};
 }
 
 function ProfileController($scope, $routeParams, $filter, $http, $window, $rootScope) {
-	$http.get(apiurl + "/favorites.json").
+	$http.get(apiurl + '/favorites.json').
 		success(function(data) {
 			$scope.favorites = data;
 			$scope.userId = window.sessionStorage.id;
 			$scope.username = window.sessionStorage.username;
 		}).
 		error(function(data, status){
-			console.log("eror: "+status);
-		})
+			console.log('eror: '+status);
+		});
 }
 
 function GameController($scope, $routeParams, $filter, $http) {
@@ -323,7 +352,7 @@ function GameController($scope, $routeParams, $filter, $http) {
 	$scope.gameId = $routeParams.gameId;
 
 	$scope.game = {};
-	$http.get(apiurl+'/games/'+$scope.gameId+'.json').
+	$http.get(apiurl+'/games/'+$scope.gameId+'.json', { cache: true } ).
         success(function(data) {
             $scope.game = data;
             $scope.team1 = $scope.game.host.team;
@@ -332,7 +361,7 @@ function GameController($scope, $routeParams, $filter, $http) {
 
     // TODO: merge with SwissRugbyController
     $scope.games = {};
-	$http.get(apiurl+'/games.json').
+	$http.get(apiurl+'/games.json', { cache: true } ).
         success(function(data) {
             $scope.games = data;
     });
@@ -350,16 +379,17 @@ function GameController($scope, $routeParams, $filter, $http) {
 	    } else {
 	    	return $scope.games;
 	    }
-	}
+	};
 	$scope.areNotEqual = function (actual, expected) {
 		return actual !== expected;
-	}
+	};
 }
 
 srsApp.controller('SwissRugbyStatsController', SwissRugbyStatsController);
 srsApp.controller('TeamController', TeamController);
 srsApp.controller('RefereeController', RefereeController);
 srsApp.controller('LeagueController', LeagueController);
+srsApp.controller('NavigationController', NavigationController);
 srsApp.controller('VenueController', VenueController);
 srsApp.controller('GameController', GameController);
 srsApp.controller('LoginController', LoginController);
