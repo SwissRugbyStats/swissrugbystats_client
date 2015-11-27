@@ -37,6 +37,15 @@ srsApp.run(function($http, $window, $rootScope) {
 				$('#navbar').collapse('hide');
 			}
         };
+    $rootScope.show_list_view = function() {
+    	$('.teams-grid-view').hide();
+    	$('.teams-list-view').show();
+    };
+	$rootScope.show_grid_view = function() {
+		$('.teams-list-view').hide();
+    	$('.teams-grid-view').show();
+	};
+
 });
 
 
@@ -131,7 +140,7 @@ function SwissRugbyStatsController($scope, $routeParams, $filter, $http) {
     	$scope.sidebar = 'test';
     	console.log($scope.sidebar);
 	} else {
-		$http.get(apiurl +'/teams.json', { cache: true } ).
+		$http.get(apiurl +'/teams', { cache: true } ).
     	success(function(data) {
         	$scope.teams = data;
     	});
@@ -200,7 +209,16 @@ function PlayersController($scope, $routeParams, $http) {
 	});
 }
 
+function get_team_logo(data) {
+	if (data.custom_logo) {
+    	return data.custom_logo;
+    } else {
+    	return data.fsr_logo;	
+    }
+}
+
 function TeamController($scope, $routeParams, $filter, $http) {
+	$('.loading-spinner').show();
 	$scope.teams = {};
 	$scope.sidebar = {};
 	if (Object.keys($routeParams).length !== 0) {
@@ -209,6 +227,8 @@ function TeamController($scope, $routeParams, $filter, $http) {
 		$http.get(apiurl +'/teams/'+$scope.teamId+'.json', { cache: true } ).
     	success(function(data) {
 	        $scope.team = data;
+	        $scope.team.logo = get_team_logo(data);
+	        $('.loading-spinner').hide();
     	});
     	$scope.sidebar = 'test';
     	console.log($scope.sidebar);

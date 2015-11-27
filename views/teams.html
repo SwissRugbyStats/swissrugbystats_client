@@ -22,9 +22,25 @@
     <input type="text" data-ng-model="filter" class="form-control" placeholder="Team name" aria-describedby="basic-addon1">
   </div>
 
+  Display as <div class="btn-group">
+      <a ng-click="show_grid_view()" href="" id="grid" class="btn btn-default btn-sm"><span
+          class="glyphicon glyphicon-th"></span>Grid</a> <a ng-click="show_list_view()" href="" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
+      </span>List</a>
+  </div>
+
   <hr>
 
-   <ul>
-    <li data-ng-repeat="t in teams | filter:filter">
+   <ul class="teams-list-view">
+    <li data-ng-repeat="t in teams | filter:filter">   
       <a href="#/teams/{{t.id}}">{{t.name}}</a></li>
   </ul>
+
+  <div class="col-sm-6 col-md-3 teams-grid-view" data-ng-repeat="t in teams | filter:filter">
+    <a href="#/teams/{{t.id}}">
+      <div class="thumbnail">
+          <img class="team-logo" data-ng-if="t.custom_logo != null" src="{{t.custom_logo}}" alt="{{t.name}}">
+          <img class="team-logo" data-ng-if="t.custom_logo == null" src="{{t.fsr_logo}}" alt="{{t.name}}">
+          <h3>{{t.name}}</h3>
+      </div>
+    </a>
+  </div>
