@@ -19,7 +19,7 @@
 	
   <div class="input-group">
     <span class="input-group-addon" id="basic-addon1">Filter: </span>
-    <input type="text" data-ng-model="filter" class="form-control" placeholder="Team name" aria-describedby="basic-addon1">
+    <input type="text" data-ng-model="teamfilter.name" class="form-control" placeholder="Team name" aria-describedby="basic-addon1">
   </div>
 
   Display as <div class="btn-group">
@@ -31,16 +31,18 @@
   <hr>
 
    <ul class="teams-list-view">
-    <li data-ng-repeat="t in teams | filter:filter">   
+    <li data-ng-repeat="t in teams | filter:teamfilter">   
       <a href="#/teams/{{t.id}}">{{t.name}}</a></li>
   </ul>
-
-  <div class="col-sm-6 col-md-3 teams-grid-view" data-ng-repeat="t in teams | filter:filter">
-    <a href="#/teams/{{t.id}}">
-      <div class="thumbnail">
-          <img class="team-logo" data-ng-if="t.custom_logo != null" src="{{t.custom_logo}}" alt="{{t.name}}">
-          <img class="team-logo" data-ng-if="t.custom_logo == null" src="{{t.fsr_logo}}" alt="{{t.name}}">
-          <h3>{{t.name}}</h3>
+  
+  <div class="row teams-grid-view">
+        <div class="col-sm-6 col-md-3" data-ng-repeat="t in teams | filter:teamfilter">
+        <a href="#/teams/{{t.id}}">
+          <div class="thumbnail">
+              <img class="team-logo" data-ng-if="t.custom_logo != null" src="{{t.custom_logo}}" alt="{{t.name}}">
+              <img class="team-logo" data-ng-if="t.custom_logo == null" src="{{t.fsr_logo}}" alt="{{t.name}}">
+              <h3>{{t.name}}</h3>
+          </div>
+        </a>
       </div>
-    </a>
   </div>

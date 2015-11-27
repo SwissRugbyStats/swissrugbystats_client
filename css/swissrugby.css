@@ -171,11 +171,30 @@ textarea.code-snippet {
 }
 .teams-grid-view {
   display: block;
+  text-align: center;
+}
+
+.teams-grid-view .thumbnail {
+    height: 185px;
 }
 
 .teams-grid-view img.team-logo {
   max-height: 130px;
   max-width: 130px;
+}
+
+/* Box Layout */
+
+@media (min-width:769px) {
+
+.equal, .equal > div[class*='col-'] {  
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex:1 1 auto;
+}
 }
 
 /* loading spinner */
