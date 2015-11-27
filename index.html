@@ -33,7 +33,7 @@
 
   <body>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="NavigationController">
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -46,6 +46,24 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-left" data-ng-click="hideNav()">
+            <!-- Seasons -->
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="">Seasons<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li data-ng-repeat="s in seasons">
+                    <a href="#/seasons/{{s.id}}">{{s.name}}</a>
+                  </li>
+                </ul>
+            </li>
+            <!-- Leagues -->
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="">Leagues<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li data-ng-repeat="l in leagues">
+                    <a href="#/leagues/{{l.id}}">{{l.name}}</a>
+                  </li>
+                </ul>
+            </li>
             <li><a href="#/leagues">Leagues</a></li>
             <!--<li><a href="#/clubs">Clubs</a></li>-->
             <li><a href="#/teams">Teams</a></li>

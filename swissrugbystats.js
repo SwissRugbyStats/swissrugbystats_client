@@ -89,6 +89,11 @@ srsApp.config(function ($routeProvider){
 			controller : 'TeamController',
 			templateUrl : 'views/team.html'
 		})
+		.when('/teams/:teamId/players',
+		{
+			controller : 'PlayersController',
+			templateUrl : 'views/players.html'
+		})
 		.when('/referees',
 		{
 			controller : 'RefereeController',
@@ -184,6 +189,15 @@ function SwissRugbyStatsController($scope, $routeParams, $filter, $http) {
 	$scope.exactMatch = function (team) {
 		return team.id == $scope.teamId;
 	};
+}
+
+function PlayersController($scope, $routeParams, $http) {
+	$scope.players = {};
+	// TODO: get only players per team
+	$http.get(apiurl +'/players/', { cache: true } ).
+	success(function(data) {
+        $scope.players = data;
+	});
 }
 
 function TeamController($scope, $routeParams, $filter, $http) {
@@ -394,6 +408,7 @@ srsApp.controller('VenueController', VenueController);
 srsApp.controller('GameController', GameController);
 srsApp.controller('LoginController', LoginController);
 srsApp.controller('ProfileController', ProfileController);
+srsApp.controller('PlayersController', PlayersController);
 
 srsApp.run(function($rootScope, $location, $anchorScroll, $routeParams) {
   //when the route is changed scroll to the proper element.

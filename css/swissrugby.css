@@ -155,3 +155,7 @@ body {
 .beta {
   font-size: 0.7em;
 }
+
+textarea.code-snippet {
+  width: 100%;
+}

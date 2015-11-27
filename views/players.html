@@ -1,0 +1,34 @@
+<!-- here is an additional section of the view -->
+<script type="text/ng-template" id="players_sb.html" ng-init="$parent.sidebar='players_sb.html'">
+    <!--<li><a href="#/about?scrollTo=about">About</a>-->
+</script>
+
+<!-- content -->
+<div>
+    <ol class="breadcrumb">
+        <li><a href="#/">Home</a></li>
+        <li><a href="#/teams">Teams</a></li>
+        <li><a href="#/teams/{{team.id}}">Team</a></li>
+        <li><a href="#/teams/{{team.id}}/players">Players</a></li>
+    </ol>
+
+</div>
+
+<div class="jumbotron">
+  <h1 class="page-header">Players</h1>
+</div>
+
+ <div class="row">
+  <div class="col-sm-6 col-md-3" data-ng-repeat="p in players">
+    <div ng-if="p.photo" class="thumbnail">
+        <img src="{{p.photo}}" alt="{{p.first_name}} {{p.last_name}}">
+        <h3>{{p.first_name}} {{p.last_name}}</h3>
+    </div>
+    <div ng-if="!p.photo" class="thumbnail">
+        <!-- code to render a large video block-->
+        <img src="/img/dummy-profile-picture.png" alt="{{p.first_name}} {{p.last_name}}">
+        <h3>{{p.first_name}} {{p.last_name}}</h3>
+    </div>
+    </div>
+  </div>
+</div>
