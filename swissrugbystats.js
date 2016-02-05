@@ -312,6 +312,7 @@ function VenueController($scope, $routeParams, $filter, $http) {
 		$http.get(apiurl+'/venues/'+$scope.venueId+'.json', { cache: true } ).
 			success(function(data) {
 	            $scope.venue = data;
+	            getcoord(data.name);
 	    });
 	} else {
 		$http.get(apiurl+'/venues.json', { cache: true } ).
@@ -437,3 +438,38 @@ srsApp.run(function($rootScope, $location, $anchorScroll, $routeParams) {
     $anchorScroll();  
   });
 });
+
+/* Google Maps helper functions */
+function getcoord(address) {
+    var geocoder = new google.maps.Geocoder();
+    //convert location into longitude and latitude
+    geocoder.geocode({
+        address: address
+    }, function(locResult) {
+        var lat1 = locResult[0].geometry.location.lat();
+        var lng1 = locResult[0].geometry.location.lng();
+        $(".map").html("latitude:" + lat1 + "<p>longitude:" + lng1 + "</p>");
+        initMap(lat1,lng1);
+		});
+}
+
+//function initMap(lat, lng) {
+function initMap() {
+//	var myLatLng = {lat: lat, lng: lng};
+	var myLatLng = {lat: -25, lng: 130};
+	console.log(myLatLng);
+
+	// Create a map object and specify the DOM element for display.
+	var map = new google.maps.Map(document.getElementById('map'), {
+		center: myLatLng,
+		scrollwheel: false,
+		zoom: 4
+	});
+
+	// Create a marker and set its position.
+	var marker = new google.maps.Marker({
+		map: map,
+		position: myLatLng,
+		title: 'Hello World!'
+	});
+}
