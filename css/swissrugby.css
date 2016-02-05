@@ -13,6 +13,10 @@ body {
   padding-top: 50px;
 }
 
+img {
+  max-width: 100%;
+}
+
 
 /*
  * Global add-ons
@@ -196,6 +200,8 @@ textarea.code-snippet {
     flex:1 1 auto;
 }
 }
+
+
 
 /* loading spinner */
 .loading-spinner {
