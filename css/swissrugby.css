@@ -94,6 +94,10 @@ img {
   margin-top: 0;
 }
 
+#logo_main {
+  max-width: 500px;
+  width: 100%;
+}
 
 /*
  * Placeholder dashboard ideas

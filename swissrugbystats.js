@@ -133,7 +133,7 @@ function SwissRugbyStatsController($scope, $routeParams, $filter, $http) {
 	if(Object.keys($routeParams).length !== 0) {
 		$scope.params = $routeParams;
 		$scope.teamId = $routeParams.teamId;
-		$http.get(apiurl +'/teams/'+$scope.teamId+'.json', { cache: true } ).
+		$http.get(apiurl +'/teams/'+$scope.teamId, { cache: true } ).
     	success(function(data) {
 	        $scope.team = data;
     	});
@@ -147,7 +147,7 @@ function SwissRugbyStatsController($scope, $routeParams, $filter, $http) {
 	}
 
 	$scope.games = {};
-	$http.get(apiurl+'/games.json', { cache: true } ).
+	$http.get(apiurl+'/games', { cache: true } ).
         success(function(data) {
             $scope.games = data;
     });
