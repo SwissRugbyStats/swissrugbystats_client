@@ -39,8 +39,7 @@
         <div class="col-sm-6 col-md-3" data-ng-repeat="t in teams | filter:teamfilter">
         <a href="#/teams/{{t.id}}">
           <div class="thumbnail">
-              <img class="team-logo" data-ng-if="t.custom_logo != null" src="{{t.custom_logo}}" alt="{{t.name}}">
-              <img class="team-logo" data-ng-if="t.custom_logo == null" src="{{t.fsr_logo}}" alt="{{t.name}}">
+              <img class="team-logo" src="{{t.logo}}" alt="{{t.name}}">
               <h3>{{t.name}}</h3>
           </div>
         </a>
