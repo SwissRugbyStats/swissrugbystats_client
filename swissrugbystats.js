@@ -1,9 +1,12 @@
 'use strict'
 
 var srsApp = angular.module('srsApp',['ngRoute']);
+
 var apiurl = 'http://api.swissrugbystats.ch';
 //var apiurl = 'http://127.0.0.1:8000';
 
+
+// TODO: write doc
 srsApp.setAuthorizationHeader = function($http, $window, token){
 	$window.sessionStorage.token = token;
 
@@ -12,7 +15,7 @@ srsApp.setAuthorizationHeader = function($http, $window, token){
 		$('#nav-item-login').hide();
 		$('#nav-item-profile').show();
 		$('#nav-item-logout').show();
-		$http.defaults.headers.common.Authorization = 'JWT '+token;
+		$http.defaults.headers.common.Authorization = 'JSONWT '+token;
 		console.log('set http header: ' + $http.defaults.headers.common.Authorization);
 	} else {
 		$('#nav-item-login').show();
@@ -23,11 +26,13 @@ srsApp.setAuthorizationHeader = function($http, $window, token){
 	}
 };
 
+// TODO: write doc
 srsApp.resetAuthorizationHeader = function($http, $window){
 	srsApp.setAuthorizationHeader($http, $window, 'undefined');
   	
 };
 
+// TODO: write doc
 srsApp.run(function($http, $window, $rootScope) {
 	srsApp.setAuthorizationHeader($http, $window, $window.sessionStorage.token);
 	$rootScope.hideNav = function() {
@@ -125,7 +130,7 @@ srsApp.config(function ($routeProvider){
 		.otherwise({ redirectTo: '/' });
 });
 
-
+// TODO: write doc
 function SwissRugbyStatsController($scope, $routeParams, $filter, $http) {
 	
 	$scope.teams = {};
@@ -200,6 +205,7 @@ function SwissRugbyStatsController($scope, $routeParams, $filter, $http) {
 	};
 }
 
+// TODO: write doc
 function PlayersController($scope, $routeParams, $http) {
 	$scope.players = {};
 	// TODO: get only players per team
@@ -209,6 +215,7 @@ function PlayersController($scope, $routeParams, $http) {
 	});
 }
 
+// TODO: write doc
 function get_team_logo(data) {
 	if (data.custom_logo) {
     	return data.custom_logo;
@@ -217,35 +224,7 @@ function get_team_logo(data) {
     }
 }
 
-function TeamController($scope, $routeParams, $filter, $http) {
-	$('.loading-spinner').show();
-	$scope.teams = {};
-	$scope.sidebar = {};
-	if (Object.keys($routeParams).length !== 0) {
-		$scope.params = $routeParams;
-		$scope.teamId = $routeParams.teamId;
-		$http.get(apiurl +'/teams/'+$scope.teamId+'.json', { cache: true } ).
-    	success(function(data) {
-	        $scope.team = data;
-	        $scope.team.logo = get_team_logo(data);
-	        $('.loading-spinner').hide();
-    	});
-    	$scope.sidebar = 'test';
-    	console.log($scope.sidebar);
-	} else {
-		$http.get(apiurl +'/teams.json', { cache: true } ).
-    	success(function(data) {
-        	$scope.teams = data;
-    	});
-	}
-
-	$scope.games = {};
-	$http.get(apiurl+'/teams/'+$scope.teamId+'/games.json', { cache: true } ).
-        success(function(data) {
-            $scope.games = data;
-    });
-}
-
+// TODO: write doc
 function RefereeController($scope, $routeParams, $filter, $http) {
 	
 	$scope.sidebar = {};
@@ -260,6 +239,7 @@ function RefereeController($scope, $routeParams, $filter, $http) {
     	});
 }
 
+// TODO: write doc
 function LeagueController($scope, $routeParams, $filter, $http) {
 	
 	$scope.sidebar = {};
@@ -284,6 +264,7 @@ function LeagueController($scope, $routeParams, $filter, $http) {
 
 }
 
+// TODO: write doc
 function NavigationController($scope, $routeParams, $filter, $http) {
 	$scope.leagues = {};
 	$scope.seasons = {};
@@ -303,6 +284,7 @@ function NavigationController($scope, $routeParams, $filter, $http) {
     	});
 }
 
+// TODO: write doc
 function VenueController($scope, $routeParams, $filter, $http) {
 	
 	$scope.sidebar = {};
@@ -322,6 +304,7 @@ function VenueController($scope, $routeParams, $filter, $http) {
 	}
 }
 
+// TODO: write doc
 function LoginController($scope, $routeParams, $filter, $http, $window, $rootScope) {
 	
 	$scope.sidebar = {};
@@ -369,6 +352,7 @@ function LoginController($scope, $routeParams, $filter, $http, $window, $rootSco
 	};
 }
 
+// TODO: write doc
 function ProfileController($scope, $routeParams, $filter, $http, $window, $rootScope) {
 	$http.get(apiurl + '/favorites.json').
 		success(function(data) {
@@ -381,6 +365,7 @@ function ProfileController($scope, $routeParams, $filter, $http, $window, $rootS
 		});
 }
 
+// TODO: write doc
 function GameController($scope, $routeParams, $filter, $http) {
 	
 	$scope.sidebar = {};
@@ -421,7 +406,6 @@ function GameController($scope, $routeParams, $filter, $http) {
 }
 
 srsApp.controller('SwissRugbyStatsController', SwissRugbyStatsController);
-srsApp.controller('TeamController', TeamController);
 srsApp.controller('RefereeController', RefereeController);
 srsApp.controller('LeagueController', LeagueController);
 srsApp.controller('NavigationController', NavigationController);
