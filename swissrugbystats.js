@@ -415,7 +415,7 @@ srsApp.controller('LoginController', LoginController);
 srsApp.controller('ProfileController', ProfileController);
 srsApp.controller('PlayersController', PlayersController);
 
-//
+// Directives
 srsApp.directive('srsGameHeader', function() {
   return {
     restrict: 'E',
@@ -423,6 +423,12 @@ srsApp.directive('srsGameHeader', function() {
   };
 });
 
+srsApp.directive('srsGameDetails', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'directives/srsGameDetails.html'
+  };
+});
 
 srsApp.run(function($rootScope, $location, $anchorScroll, $routeParams) {
   //when the route is changed scroll to the proper element.
