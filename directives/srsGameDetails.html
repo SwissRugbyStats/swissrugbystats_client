@@ -1,0 +1,58 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th><h1 class="page-header"><a href="#/teams/{{game.host.team.id}}">{{game.host.team.name}}</a></h1></th>
+            <th>versus</th>
+            <th><h1 class="page-header"><a href="#/teams/{{game.guest.team.id}}">{{game.guest.team.name}}</a></h1></th>s
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><img src="{{game.host.team.logo}}" alt="{{game.host.team.name}}" title="{{game.host.team.name}}" id="team-logo"></td>
+            <td><h1 id="result" data-ng-show="game.host.score >= 0 && game.guest.score >= 0">{{game.host.score}} : {{game.guest.score}}</h1></td>
+            <td><img src="{{game.guest.team.logo}}" alt="{{game.guest.team.name}}" title="{{game.guest.team.name}}" id="team-logo"></td>
+        </tr>
+
+        <tr ng-if="game.host.score >= 0 && game.guest.score >= 0">
+            <td></td>
+            <td>Kickoff</td>
+            <td></td>
+        </tr>
+
+        <tr ng-if="game.venue">
+            <td></td>
+            <td>Venue</td>
+            <td colspan="">{{game.venue.name}}</td>
+        </tr>
+
+        <tr ng-if="game.referee.name">
+            <td>Referee</td>
+            <td colspan="2">{{game.referee.name}}</td>
+        </tr>
+
+        <tr ng-if="game.host.score >= 0 && game.guest.score >= 0">
+            <td>{{game.host.tries}}</td>
+            <td>Tries</td>
+            <td>{{game.guest.tries}}</td>
+        </tr>
+
+        <tr ng-if="game.host.score >= 0 && game.guest.score >= 0">
+            <td>{{game.host.redCards}}</td>
+            <td>Red Cards</td>
+            <td>{{game.guest.redCards}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div id="host-details">
+
+<h1 class="page-header"><a href="#/teams/{{game.host.team.id}}">{{game.host.team.name}}</a></h1>
+</div>
+<div id="vs">
+    <h1>vs</h1>
+
+</div>
+<div id="guest-details">
+
+    <h1 class="page-header"><a href="#/teams/{{game.guest.team.id}}">{{game.guest.team.name}}</a></h1>
+</div>
