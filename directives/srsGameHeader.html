@@ -4,7 +4,7 @@
 </div>
 <div id="vs">
     <h1>vs</h1>
-    <h1 id="result" data-ng-if="game.host.score && game.guest.score">{{game.host.score}} : {{game.guest.score}}</h1>
+    <h1 id="result" data-ng-if="game.host.score >= 0 && game.guest.score >= 0">{{game.host.score}} : {{game.guest.score}}</h1>
 </div>
 <div id="guest-details">
     <img src="{{game.guest.team.logo}}" alt="{{game.guest.team.name}}" title="{{game.guest.team.name}}" id="team-logo">
