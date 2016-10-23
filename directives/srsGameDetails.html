@@ -28,6 +28,12 @@
             <td colspan="2">{{game.referee.name}}</td>
         </tr>
 
+        <tr ng-if="game.host.forfait || game.guest.forfait">
+            <td><span ng-show="game.host.forfait">Forfait gegeben</span></td>
+            <th>Forfait?</th>
+            <td><span ng-show="game.guest.forfait">Forfait gegeben</span></td>
+        </tr>
+
         <tr ng-if="game.host.score >= 0 && game.guest.score >= 0">
             <td>{{game.host.tries}}</td>
             <th>Tries</th>
