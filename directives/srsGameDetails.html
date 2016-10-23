@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th><h1 class="page-header"><a href="#/teams/{{game.host.team.id}}">{{game.host.team.name}}</a></h1></th>
-            <th>versus</th>
+            <th><h1 class="page-header">versus</h1></th>
             <th><h1 class="page-header"><a href="#/teams/{{game.guest.team.id}}">{{game.guest.team.name}}</a></h1></th>s
         </tr>
     </thead>
@@ -14,15 +14,13 @@
         </tr>
 
         <tr ng-if="game.host.score >= 0 && game.guest.score >= 0">
-            <td></td>
             <td>Kickoff</td>
-            <td></td>
+            <td colspan="2">{{game.date | date:"dd.MM.yyyy',' HH:mm"}}</td>
         </tr>
 
         <tr ng-if="game.venue">
-            <td></td>
             <td>Venue</td>
-            <td colspan="">{{game.venue.name}}</td>
+            <td colspan="2"><a href="#/venues/{{game.venue.id}}">{{game.venue.name}}</td>
         </tr>
 
         <tr ng-if="game.referee.name">
