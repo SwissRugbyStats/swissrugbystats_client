@@ -1,0 +1,12 @@
+<div id="host-details">
+    <img src="{{game.host.team.logo}}" alt="{{game.host.team.name}}" title="{{game.host.team.name}}" id="team-logo">
+    <h1 class="page-header"><a href="#/teams/{{game.host.team.id}}">{{game.host.team.name}}</a></h1>
+</div>
+<div id="vs">
+    <h1>vs</h1>
+    <h1 id="result" data-ng-if="game.host.score && game.guest.score">{{game.host.score}} : {{game.guest.score}}</h1>
+</div>
+<div id="guest-details">
+    <img src="{{game.guest.team.logo}}" alt="{{game.guest.team.name}}" title="{{game.guest.team.name}}" id="team-logo">
+    <h1 class="page-header"><a href="#/teams/{{game.guest.team.id}}">{{game.guest.team.name}}</a></h1>
+</div>

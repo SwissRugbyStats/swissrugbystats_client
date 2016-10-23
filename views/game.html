@@ -15,7 +15,7 @@
 </div>
 
 <div class="jumbotron">
-  <h1 class="page-header"><a href="#/teams/{{game.host.team.id}}">{{game.host.team.name}}</a> vs <a href="#/teams/{{game.guest.team.id}}">{{game.guest.team.name}}</a><span id="result" data-ng-if="game.host.score && game.guest.score"> ({{game.host.score}}:{{game.guest.score}})</span></h1>
+    <srs-game-header></srs-game-header>
     <p>
       <span data-ng-if="game.date">Kickoff: {{game.date | date:"dd.MM.yyyy',' HH:mm"}}<br /></span>
       <span data-ng-if="game.venue.name">Venue: <a href="#/venues/{{game.venue.id}}">{{game.venue.name}}</a><br /></span>
