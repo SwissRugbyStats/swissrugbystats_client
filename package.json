@@ -1,0 +1,23 @@
+{
+  "name": "swissrugbystats.client",
+  "version": "0.0.1",
+  "description": "Webclient for swissrugbystats.ch",
+  "main": "swissrugbystats.js",
+  "dependencies": {
+    "angular": "^1.5.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SwissRugbyStats/swissrugbystats_client.git"
+  },
+  "author": "platzh1rsch (www.platzh1rsch.ch)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SwissRugbyStats/swissrugbystats_client/issues"
+  },
+  "homepage": "https://github.com/SwissRugbyStats/swissrugbystats_client#readme"
+}
