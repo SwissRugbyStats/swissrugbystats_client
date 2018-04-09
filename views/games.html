@@ -23,7 +23,7 @@
 		<tr data-ng-repeat="g in games"> 
 			<td>{{ g.date | date:'dd.MM.yyyy' }}</td>
 			<td><a href="#/games/{{ g.id }}">{{ g.host.team.name }} vs {{ g.guest.team.name }}</a></td>
-			<td><span ng-show="g.host.score >= 0 || g.guest.score >= 0">{{ g.host.score}} : {{ g.guest.score }}</span></td>
+			<td><span ng-show="g.host.score">{{ g.host.score}} : {{ g.guest.score }}</span></td>
 		</tr>
 	</tbody>
  </table>
